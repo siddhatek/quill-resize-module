@@ -4,8 +4,11 @@ export default {
   selectedClass: 'selected',
   activeClass: 'active',
   embedTags: ['VIDEO', 'IFRAME'],
-  tools: ['left', 'center', 'right', 'full', 'edit'],
-
+  tools: [
+    ["width100", "width50", "widthPlus", "widthMinus"],
+    ['left', 'center', 'right', 'full', 'edit'],
+  ],
+ 
   parchment: {
     image: {
       attribute: ['width'],

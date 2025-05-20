@@ -23,9 +23,13 @@ export default class Toolbar extends BaseModule {
     center: IconAlignCenter,
     right: IconAlignRight,
     full: IconFloatFull,
-    edit: IconPencil
-  }
-
+    edit: IconPencil,
+    width100: "100%",
+    width50: "50%",
+    widthPlus: "+",
+    widthMinus: "−",
+  };
+ 
   static Tools = {
     left: {
       apply (activeEle) {
@@ -63,10 +67,44 @@ export default class Toolbar extends BaseModule {
       handler (evt, button, activeEle) {
         this.quill.emitter.emit('resize-edit', activeEle, this.blot)
       }
-    }
-  }
-
-  onCreate () {
+    },
+    width100: {
+      apply(activeEle) {
+        activeEle.style.width = "100%";
+      },
+      isApplied(activeEle) {
+        return activeEle.style.width === "100%";
+      },
+    },
+    width50: {
+      apply(activeEle) {
+        activeEle.style.width = "50%";
+      },
+      isApplied(activeEle) {
+        return activeEle.style.width === "50%";
+      },
+    },
+    widthPlus: {
+      handler(evt, button, activeEle) {
+        const current = parseFloat(activeEle.style.width) || 100;
+        const next = Math.min(current + 5, 100);
+        activeEle.style.width = `${next}%`;
+        this.requestUpdate();
+        return true; // prevent toggle logic
+      },
+    },
+    widthMinus: {
+      handler(evt, button, activeEle) {
+        const current = parseFloat(activeEle.style.width) || 100;
+        const next = Math.max(current - 5, 5);
+        activeEle.style.width = `${next}%`;
+        this.requestUpdate();
+        return true; // prevent toggle logic
+      },
+    },
+  };
+ 
+  onCreate() {
     // Setup Toolbar
     this.toolbar = document.createElement('div')
     this.toolbar.className = 'ql-resize-toolbar'
@@ -75,42 +113,60 @@ export default class Toolbar extends BaseModule {
     // Setup Buttons
     this._addToolbarButtons()
   }
-
-  _addToolbarButtons () {
-    const Icons = this.constructor.Icons
-    const Tools = this.constructor.Tools
-    const buttons = []
-    this.options.tools.forEach((t) => {
-      const tool = Tools[t] || t
-      if (tool.verify && tool.verify.call(this, this.activeEle) === false) return
-
-      const button = document.createElement('button')
-      button.type = 'button'
-      buttons.push(button)
-      button.innerHTML = ((tool.icon || '') + (tool.text || '')) || Icons[t]
-      button.addEventListener('click', (evt) => {
-        if (tool.handler && tool.handler.call(this, evt, button, this.activeEle) !== true) return
-
-        // deselect all buttons
-        buttons.forEach(button => (button.classList.remove('active')))
+ 
+  _addToolbarButtons() {
+    const Icons = this.constructor.Icons;
+    const Tools = this.constructor.Tools;
+ 
+    const toolsConfig = this.options.tools;
+    const buttons = [];
+ 
+    const createRow = (toolRow) => {
+      const row = document.createElement("div");
+      row.className = "ql-resize-toolbar-row"; // add styling later
+      toolRow.forEach((t) => {
+        const tool = Tools[t] || t;
+        if (tool.verify && tool.verify.call(this, this.activeEle) === false)
+          return;
+ 
+        const button = document.createElement("button");
+        button.type = "button";
+        button.innerHTML = (tool.icon || "") + (tool.text || "") || Icons[t];
+        button.addEventListener("click", (evt) => {
+          if (
+            tool.handler &&
+            tool.handler.call(this, evt, button, this.activeEle) !== true
+          )
+            return;
+ 
+          buttons.forEach((button) => button.classList.remove("active"));
+ 
+          if (tool.isApplied && tool.isApplied.call(this, this.activeEle)) {
+            ImageFormatClass.remove(this.activeEle);
+          } else {
+            button.classList.add("active");
+            tool.apply && tool.apply.call(this, this.activeEle);
+          }
+ 
+          this.requestUpdate();
+        });
+ 
         if (tool.isApplied && tool.isApplied.call(this, this.activeEle)) {
-          // If applied, unapply
-          ImageFormatClass.remove(this.activeEle)
-        } else {
-          // otherwise, select button and apply
-          button.classList.add('active')
-          tool.apply && tool.apply.call(this, this.activeEle)
+          button.classList.add("active");
         }
-
-        // image may change position; redraw drag handles
-        this.requestUpdate()
-      })
-
-      if (tool.isApplied && tool.isApplied.call(this, this.activeEle)) {
-        // select button if previously applied
-        button.classList.add('active')
-      }
-      this.toolbar.appendChild(button)
-    })
+ 
+        row.appendChild(button);
+        buttons.push(button);
+      });
+ 
+      this.toolbar.appendChild(row);
+    };
+ 
+    // Handle tools: flat array (backward compatibility) or 2D array
+    if (Array.isArray(toolsConfig[0])) {
+      toolsConfig.forEach(createRow);
+    } else {
+      createRow(toolsConfig);
+    }
   }
 }
