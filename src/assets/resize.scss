@@ -167,18 +167,28 @@
 }
 
 .ql-resize-style-left {
-  float: left;
-  margin: 0 1em 1em 0;
+  display: block !important;
+  margin-left: 0;
+  margin-right: auto;
+  text-align: left;
+  /* Alternative approach using flexbox */
+  /* align-self: flex-start; */
 }
 
 .ql-resize-style-center {
-  display: block;
-  margin: auto;
+  display: block !important;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
 
 .ql-resize-style-right {
-  float: right;
-  margin: 0 0 1em 1em;
+  display: block !important;
+  margin-left: auto;
+  margin-right: 0;
+  text-align: right;
+  /* Alternative approach using flexbox */
+  /* align-self: flex-end; */
 }
 
 .ql-resize-style-full {
