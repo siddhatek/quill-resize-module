@@ -7,49 +7,117 @@
 
 .ql-resize-toolbar {
   position: absolute;
-  top: -12px;
+  top: -32px;
   right: 0;
   left: 0;
-  height: 0;
-  min-width: 120px;
   text-align: center;
   color: #333;
   box-sizing: border-box;
   cursor: default;
   pointer-events: all;
-
-  button {
-    display: inline-block;
-    min-width: 24px;
-    height: 24px;
-    padding: 2px;
-    background-color: #fff;
-    border: 1px solid #999;
-    vertical-align: middle;
-
-    &:first-child {
-      border-top-left-radius: 3px;
-      border-bottom-left-radius: 3px;
-    }
-    &:last-child {
-      border-bottom-right-radius: 3px;
-      border-top-right-radius: 3px;
-    }
-
-    &:not(:first-child) {
-      border-left: none;
-    }
-
-    &.active {
-      filter: invert(20%);
-    }
-  }
-
-  svg {
-    width: 18px;
-  }
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  width: 145px;
+  margin: 0 auto;
+  padding: 4px;
+  gap: 4px;
+  display: flex;
+  flex-direction: column;
 }
 
+.ql-resize-toolbar-row {
+  display: flex;
+  justify-content: center;
+}
+
+.ql-resize-toolbar button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 25px;
+  background-color: #fff;
+  border: 1px solid #d0d0d0;
+  vertical-align: middle;
+  width: 45px;
+  min-width: 40px;
+  font-size: 13px;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ql-resize-toolbar button:first-child {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+.ql-resize-toolbar button:last-child {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.ql-resize-toolbar button + button {
+  border-left: none;
+}
+
+.ql-resize-toolbar button.active {
+  background-color: #e2e2e2;
+}
+
+.ql-resize-toolbar button:hover {
+  background-color: #f5f5f5;
+  border-color: #bbb;
+}
+
+.ql-resize-toolbar svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Width controls styling */
+.width-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.width-controls .plus,
+.width-controls .minus {
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.width-controls .divider {
+  width: 1px;
+  height: 16px;
+  background-color: #bcbcbc;
+  margin: 0 4px;
+}
+
+/* Specific button styles */
+.toolbar-button.width100,
+.toolbar-button.width50 {
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.toolbar-button.widthMinus,
+.toolbar-button.widthPlus {
+  font-weight: bold;
+  font-size: 16px;
+  padding: 6px 8px;
+}
+
+.toolbar-button.restore {
+  font-size: 12px;
+  font-weight: normal;
+}
+
+/* Handle styles */
 .ql-resize-handle {
   position: absolute;
   height: 12px;
@@ -59,27 +127,30 @@
   box-sizing: border-box;
   opacity: 0.80;
   pointer-events: all;
+}
 
-  &.tl {
-    top: -6px;
-    left: -6px;
-    cursor: nwse-resize;
-  }
-  &.tr {
-    top: -6px;
-    right: -6px;
-    cursor: nesw-resize;
-  }
-  &.br {
-    right: -6px;
-    bottom: -6px;
-    cursor: nwse-resize;
-  }
-  &.bl {
-    left: -6px;
-    bottom: -6px;
-    cursor: nwse-resize;
-  }
+.ql-resize-handle.tl {
+  top: -6px;
+  left: -6px;
+  cursor: nwse-resize;
+}
+
+.ql-resize-handle.tr {
+  top: -6px;
+  right: -6px;
+  cursor: nesw-resize;
+}
+
+.ql-resize-handle.br {
+  right: -6px;
+  bottom: -6px;
+  cursor: nwse-resize;
+}
+
+.ql-resize-handle.bl {
+  left: -6px;
+  bottom: -6px;
+  cursor: nesw-resize;
 }
 
 .ql-resize-display {
@@ -96,17 +167,30 @@
 }
 
 .ql-resize-style-left {
-    float: left;
-    margin: 0 1em 1em 0;
+  display: block !important;
+  margin-left: 0;
+  margin-right: auto;
+  text-align: left;
+  /* Alternative approach using flexbox */
+  /* align-self: flex-start; */
 }
+
 .ql-resize-style-center {
-    display: block;
-    margin: auto;
+  display: block !important;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
+
 .ql-resize-style-right {
-    float: right;
-    margin: 0 0 1em 1em;
+  display: block !important;
+  margin-left: auto;
+  margin-right: 0;
+  text-align: right;
+  /* Alternative approach using flexbox */
+  /* align-self: flex-end; */
 }
+
 .ql-resize-style-full {
-    width: 100% !important;
+  width: 100% !important;
 }
