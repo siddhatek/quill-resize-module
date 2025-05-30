@@ -7,10 +7,10 @@ export default class Resize extends BaseModule {
     this.boxes = []
 
     // add 4 resize handles
-    this.addBox('tl') // top left
-    this.addBox('tr') // top right
-    this.addBox('br') // bottom right
-    this.addBox('bl') // bottom left
+    // this.addBox('tl') // top left
+    // this.addBox('tr') // top right
+    // this.addBox('br') // bottom right
+    // this.addBox('bl') // bottom left
   }
 
   onDestroy () {

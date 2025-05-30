@@ -4,7 +4,10 @@ export default {
   selectedClass: 'selected',
   activeClass: 'active',
   embedTags: ['VIDEO', 'IFRAME'],
-  tools: ['left', 'center', 'right', 'full', 'edit'],
+  tools: [
+    ['width100', 'width50', 'widthControls'],
+    ['left', 'center', 'right'],
+  ],
 
   parchment: {
     image: {

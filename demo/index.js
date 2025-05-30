@@ -23,19 +23,8 @@ const demoEditor = new Quill('#editor', {
       embedTags: ['VIDEO', 'IFRAME'],
       // custom toolbar
       tools: [
-        'left', 'center', 'right', 'full', 'edit',
-        {
-          text: 'Alt',
-          verify (activeEle) {
-            return (activeEle && activeEle.tagName === 'IMG')
-          },
-          handler (evt, button, activeEle) {
-            let alt = activeEle.alt || ''
-            alt = window.prompt('Alt for image', alt)
-            if (alt == null) return
-            activeEle.setAttribute('alt', alt)
-          }
-        }
+        ['width100', 'width50', 'widthControls'],
+        ['left', 'center', 'right'],
       ]
     }
   }

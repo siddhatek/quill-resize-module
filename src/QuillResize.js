@@ -73,6 +73,15 @@ export default class QuillResize {
     if (this.options.embedTags) {
       this.initializeEmbed()
     }
+
+    document.addEventListener('mousedown', this.handleDocumentClick.bind(this), false);
+  }
+
+  handleDocumentClick(evt) {
+    const isClickInsideEditor = this.quill.container.contains(evt.target);
+    if (!isClickInsideEditor && this.activeEle) {
+      this.hide();
+    }
   }
 
   initializeModules () {
