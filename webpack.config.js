@@ -89,7 +89,7 @@ module.exports = () => {
       },
       // 发布排除quill库
       externals: {
-        quill: 'Quill'
+        quill: 'quill'
       }
     })
   } else {
