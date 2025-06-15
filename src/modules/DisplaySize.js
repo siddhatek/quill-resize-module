@@ -1,6 +1,10 @@
 import BaseModule from './BaseModule'
 
 export default class DisplaySize extends BaseModule {
+  constructor(...args) {
+    super(...args);
+  }
+
   onCreate () {
     // Create the container to hold the size display
     this.display = document.createElement('div')

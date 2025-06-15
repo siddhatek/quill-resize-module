@@ -18,6 +18,10 @@ const ClassAttributor = Parchment.ClassAttributor
 const ImageFormatClass = new ClassAttributor('imagestyle', 'ql-resize-style')
 
 export default class Toolbar extends BaseModule {
+  constructor(...args) {
+    super(...args);
+  }
+
   static Icons = {
     left: IconAlignLeft,
     center: IconAlignCenter,

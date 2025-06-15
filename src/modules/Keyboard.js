@@ -18,6 +18,10 @@ const keyCodes = {
 }
 
 export default class Keyboard extends BaseModule {
+  constructor(...args) {
+    super(...args);
+  }
+
   static injectInit (quill) {
     // left/right
     const bindings = quill.keyboard.bindings

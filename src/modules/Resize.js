@@ -1,6 +1,10 @@
 import BaseModule from './BaseModule'
 
 export default class Resize extends BaseModule {
+  constructor(...args) {
+    super(...args);
+  }
+
   onCreate () {
     this.blotOptions = this.options.parchment[this.blot.statics.blotName]
     // track resize handles
